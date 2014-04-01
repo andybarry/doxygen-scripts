@@ -25,7 +25,7 @@ Add this to your crontab.  For example,
 
     * * * * * /home/abarry/doxygen-scripts/generateDoxygen
 
-4) Update variables in the script, like the REPO url:
+4) Update variables in the **generateDoxygen**, like the REPO url:
 
     REPO=https://github.com/andybarry/drake.git
     DIR=drake
