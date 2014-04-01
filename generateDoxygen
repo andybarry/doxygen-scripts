@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# check if we need to generate doxygen based on the file that is written by the 
+# post-commit hook
+POSTFILE=/var/www/doxygen/doxygen_refresh.txt
+
+POSTHOOK=`cat $POSTFILE`
+
+if [ $POSTHOOK != "1" ]
+then
+	echo "Not updating doxygen, POSTHOOK=$POSTHOOK"
+	exit
+fi
+
+
+# if we're here, then we are going to upate doxygen
+echo "0" > $POSTFILE
+
+
+# make sure your repo supports read-only access
+# this is supported by default on github https 
+REPO=https://github.com/andybarry/drake.git
+DIR=drake
+
+rm -rf $DIR
+git clone --depth 1 $REPO $DIR
+cd $DIR
+
+# get the latest commit
+COMMIT=`git log -n 1 | head -n 1`
+
+
+# paste the commit number into the doxyfile
+sed -i "s/PROJECT_NUMBER         =/PROJECT_NUMBER         = commit: ${COMMIT:7:10}/" doc/Doxyfile
+
+
+doxygen doc/Doxyfile
+
