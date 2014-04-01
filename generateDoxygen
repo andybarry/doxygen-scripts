@@ -19,7 +19,7 @@ echo "0" > $POSTFILE
 
 # make sure your repo supports read-only access
 # this is supported by default on github https 
-REPO=https://github.com/andybarry/drake.git
+REPO=https://github.com/RobotLocomotion/drake.git
 DIR=drake
 
 rm -rf $DIR
